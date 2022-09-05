@@ -1,0 +1,92 @@
+QUE: Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+Answer: 
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {boolean}
+ */
+var isSameTree = function(p, q) {
+    let cur1 = p;
+    let cur2 = q;
+    const stack1 = [];
+    const stack2 = [];
+    
+    while(cur1 !== null || cur2 !== null || stack1.length !== 0 || stack2.length !== 0){
+        if(cur1 === null && cur2=== null && stack1.length === 0 && stack2.length=== 0){
+            return true;
+        }
+        else if(cur1!== null && cur2!== null){
+            if(cur1.val === cur2.val){
+                stack1.push(cur1);
+                stack2.push(cur2);
+                cur1 = cur1.left;
+                cur2 = cur2.left;
+            }else{
+                return false;
+            }
+        }else if((cur1 !== null && cur2=== null)|| (cur1 === null && cur2!== null)){
+            return false;
+        }else{
+            cur1 = stack1.pop();
+            cur2 = stack2.pop();
+            cur1 = cur1.right;
+            cur2 = cur2.right;
+        }
+    }
+    return true;
+};
+/**********Solutiom from net-------------*/
+BFS Iterative: 
+var isSameTree = function(p, q) {
+    const queue = [[p,q]];
+    
+    while (queue.length) {
+        const [p,q] = queue.shift();
+        
+        if (!p && !q) return true;
+        if (!p || !q) return false;
+        if (p.val !== q.val) return false;
+        
+        if (p.left || q.left) queue.push([p.left, q.left]);
+        if (p.right || q.right) queue.push([p.right, q.right]);
+    }
+    return true;
+};
+DFS Iterative:
+var isSameTree = function(p, q) {
+    const s = [[p,q]];
+    
+    while (s.length) {
+        const [p,q] = s.pop();
+        
+        if (!p && !q) return true;
+        if (!p || !q) return false;
+        if (p.val !== q.val) return false;
+        
+        if (p.left || q.left) s.push([p.left, q.left]);
+        if (p.right || q.right) s.push([p.right, q.right]);
+    }
+    return true;
+};
+Recursive DFS: 
+var isSameTree = function(p, q) {
+    if (!p && !q) return true;
+    if (!p || !q) return false;
+    if (p.val !== q.val) return false;
+    
+    const L = isSameTree(p.left, q.left);
+    const R = isSameTree(p.right, q.right);
+    
+    return L && R;
+};
