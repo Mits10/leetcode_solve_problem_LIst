@@ -1,0 +1,83 @@
+QUE :Given the root of a binary tree, return the level order traversal of its nodes' values.
+ (i.e., from left to right, level by level).
+
+Not correct Answer : 
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function(root) {
+    let stack = [];
+    var stack1 = [];
+    let curr2 = [];
+   if(root === null){
+        return stack1;
+    }
+    stack1.push([root.val]);
+     if(root.left === null && root.right === null){
+        return stack1;
+    }
+    if (root.left !== null){
+         curr2.push(root.left.val);
+    }
+    if(root.right !== null){
+         curr2.push(root.right.val);
+    }
+    stack1.push(curr2);
+   console.log(curr2,"===curr2");
+    stack.push(root.left);
+    stack.push(root.right);
+
+     while(stack.length !== 0 ){
+         console.log(stack,"===stack");
+        curr2 = [];
+        console.log(curr2,"===curr2nowhere");
+         console.log(stack1,"===stack1 there1");
+        right = stack.pop();
+        left = stack.pop();
+         console.log(stack1,"===stack1 there2")
+        if(left === null && right === null){
+            continue;
+        }
+        else{
+            if(left !== null){
+                stack.push(left.left);
+                stack.push(left.right);
+                 if(left.left !== null){
+                curr2.push(left.left.val);
+                }if(left.right !== null){
+                curr2.push(left.right.val);
+                }
+                
+            } console.log(curr2,"===curr2there");
+            if(right != null){
+                stack.push(right.left);
+                stack.push(right.right);
+                if(right.left !== null){
+                curr2.push(right.left.val);
+                }if(right.right !== null){
+                curr2.push(right.right.val);
+                }
+            } console.log(curr2,"===curr2here");
+      
+            if(curr2.length > 0){
+                console.log(stack1,"===stack1");
+                console.log(curr2,"===the culprit");
+                stack1.push(curr2);
+               
+            }
+            
+        }
+         console.log(stack1,"===stack1 there3");
+    }
+   console.log(stack1,"===stack1 here");
+    return stack1;
+};
