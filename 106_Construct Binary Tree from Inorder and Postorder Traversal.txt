@@ -1,0 +1,37 @@
+Given two integer arrays inorder and postorder where inorder is
+ the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, 
+construct and return the binary tree.
+
+Answer: 
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {number[]} inorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+var buildTree = function(inorder, postorder) {
+    let Map = [];
+    for(var i = 0; i < inorder.length; i++){
+        Map[inorder[i]] = i;
+    }
+    const helper = (pPointer , ileft, iright) => {
+        let rootValue = postorder[pPointer];
+        let iMid = Map[rootValue];
+        let root = new TreeNode(rootValue);
+        if(iMid > ileft){
+            root.left = helper(pPointer-(iright-iMid)-1, ileft, iMid-1);
+        }
+        if(iMid < iright) {
+            root.right = helper(pPointer-1, iMid+1, iright);
+        }
+        return root;
+    }
+    return helper(postorder.length-1,0,inorder.length-1);
+};
