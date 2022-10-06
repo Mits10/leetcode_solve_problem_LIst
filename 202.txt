@@ -1,0 +1,28 @@
+202
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isHappy = function(n) {
+    let slow = n;
+    let fast = n;
+    do{
+        slow = helper(slow);
+        fast = helper(fast);
+        if(fast === 1) return true;
+        fast = helper(fast);
+        if(fast === 1) return true;
+    }while(slow != fast && fast!=1)
+    return false;
+};
+const helper = (num) => {
+    var sum = 0;
+    var reminder = 0;
+    while(num){
+        reminder = num % 10;
+        sum = (reminder * reminder) + sum ;
+        num =Math.trunc(num/10);
+    }
+    
+    return sum;
+}

@@ -1,0 +1,11 @@
+141
+let slow = head;
+    let fast = head;
+    while(slow && fast){
+        slow = head.next;
+        console.log(slow,"slow");
+        fast = head.next.next;
+        console.log(fast,"fast");
+        if(fast === slow) return true;
+    }
+        return false;
