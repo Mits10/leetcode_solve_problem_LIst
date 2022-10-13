@@ -1,0 +1,36 @@
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+
+Answer: 
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function(s, t) {
+    let map = {};
+    let lengthS = s.length;
+    let lengthT = t.length;
+    if(lengthS != lengthT) return false;
+    for( var i = 0; i < lengthS; i++ ) {
+        if(!map[s.charAt(i)]) map[s.charAt(i)] = 1;
+        else{
+            map[s.charAt(i)] = map[s.charAt(i)] + 1 ;
+        }
+    }
+    for( var j = 0; j< lengthT; j++) {
+        if(!map[t.charAt(j)]) return false;
+        if(map[t.charAt(j)] < 0 ) return false;
+        map[t.charAt(j)] = map[t.charAt(j)] - 1;
+    }
+    return true;
+};
