@@ -1,0 +1,46 @@
+Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+
+Answer: 
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {TreeNode}
+ */
+var sortedListToBST = function(head) {
+    let stack = [];
+    if(head === null) return null;
+    while (head !== null){
+        stack.push(head.val);
+        head = head.next;
+    }
+    const helper = (left, right) => {
+        let value = (left + right)/2 ;
+       let mid = Math.ceil(value);
+       let rootValue = stack[mid];
+       let root = new TreeNode (rootValue);
+       if(mid > left){
+       root.left = helper(left,mid-1);
+       }
+       if(mid < right) {
+       root.right = helper(mid+1,right);
+       }
+       return root;
+   } 
+    return helper(0,stack.length-1);
+};
